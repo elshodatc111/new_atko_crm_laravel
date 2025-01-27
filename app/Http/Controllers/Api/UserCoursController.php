@@ -11,6 +11,7 @@ use App\Models\Test;
 use App\Models\TestNatija;
 use App\Models\GuruhTime;
 use App\Models\Guruh;
+use App\Models\Video;
 use App\Models\GuruhUser;
 use App\Models\Tulov;
 use Carbon\Carbon;
@@ -34,10 +35,14 @@ class UserCoursController extends Controller
         $k = 0;
         foreach ($userGuruhs as $key => $value) {
             $date = Carbon::parse($value->guruh_end)->addDays(30);
+            $Video = Video::where('cours_name',Cours::find($value->cours_id)->cours_name)->select('sort_numbr','lessen_name','video_url')->orderBy('sort_numbr', 'desc')->get();            
             if($date>=$now){
-                $Cours[$k]['name'] = Cours::find($value->cours_id)->cours_name; 
-                $Cours[$k]['muddat'] = $date; 
-                $k++;
+                if($Video){
+                    $Cours[$k]['name'] = Cours::find($value->cours_id)->cours_name; 
+                    $Cours[$k]['video'] = $Video; 
+                    $Cours[$k]['muddat'] = $date; 
+                    $k++;
+                }
             }
         }
         $uniqueCours = [];
@@ -46,10 +51,9 @@ class UserCoursController extends Controller
                 $uniqueCours[] = $item;
             }
         }
-        
         return response()->json([
             "status" => true,
-            "message" => "Cours",
+            "message" => "Online Kurslar",
             "cours" => $uniqueCours,
         ]);
     }
