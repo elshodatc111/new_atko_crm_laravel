@@ -35,7 +35,7 @@ class UserCoursController extends Controller
         $k = 0;
         foreach ($userGuruhs as $key => $value) {
             $date = Carbon::parse($value->guruh_end)->addDays(30);
-            $Video = Video::where('cours_name',Cours::find($value->cours_id)->cours_name)->select('sort_numbr','lessen_name','video_url')->orderBy('sort_numbr', 'desc')->get();            
+            $Video = Video::where('cours_name',Cours::find($value->cours_id)->cours_name)->select('sort_numbr','lessen_name','video_url')->orderBy('sort_numbr', 'asc')->get();            
             if($date>=$now){
                 if($Video){
                     $Cours[$k]['name'] = Cours::find($value->cours_id)->cours_name; 
