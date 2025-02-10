@@ -27,12 +27,9 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("home", [UserController::class, "home"]);
     Route::get("home/show/{id}", [UserController::class, "home_show"]);
     Route::get("paymart", [UserController::class, "paymart"]);
-
     
     Route::get("courss", [UserCoursController::class, "courss"]);
     
     Route::get("test", [UserCoursController::class, "test"]);
     Route::post("test/check", [UserCoursController::class, "test_check"]);
-
-    
 });
